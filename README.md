@@ -10,11 +10,11 @@ A [Keycloak](https://www.keycloak.org/) password policy that checks potential pa
 
 Build the jar with `make build` (see the [development](#development) section for prerequisites) and place it under `${KEYCLOAK_HOME}/standalone/deployments/`.
 
-Now you should the provider as an option in the dropdown, and can configure it:
+Now you should see the provider as an option in the dropdown, and can configure it:
 
 ![policy config][policy-config]
 
-The policy value is a threshold for the number of times that the password hash appears in HIBP. The default is 1.
+The policy value is the threshold for the number of times that the password hash appears in HIBP. The default is 1, meaning that any password that appears in HIBP is disallowed.
 
 ## development
 
