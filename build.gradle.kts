@@ -27,4 +27,5 @@ dependencies {
     implementation("org.keycloak:keycloak-core:$keycloakVersion")
     implementation("org.keycloak:keycloak-server-spi:$keycloakVersion")
     implementation("org.keycloak:keycloak-server-spi-private:$keycloakVersion")
+    implementation("khttp:khttp:1.0.0")
 }

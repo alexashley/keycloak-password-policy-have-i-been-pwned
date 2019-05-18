@@ -1,12 +1,14 @@
 package dev.alexashley.policy
 
+import dev.alexashley.policy.services.HaveIBeenPwnedApiService
+import dev.alexashley.policy.services.PasswordService
 import org.keycloak.Config
 import org.keycloak.models.KeycloakSession
 import org.keycloak.models.KeycloakSessionFactory
 import org.keycloak.policy.PasswordPolicyProvider
 import org.keycloak.policy.PasswordPolicyProviderFactory
 
-class HaveIBeenPwnedPasswordPolicyProviderFactory: PasswordPolicyProviderFactory {
+class HaveIBeenPwnedPasswordPolicyProviderFactory : PasswordPolicyProviderFactory {
     companion object {
         const val providerId = "password-policy-have-i-been-pwned"
     }
@@ -20,7 +22,11 @@ class HaveIBeenPwnedPasswordPolicyProviderFactory: PasswordPolicyProviderFactory
 
     override fun getDisplayName() = "Have I Been Pwned?"
 
-    override fun create(session: KeycloakSession): PasswordPolicyProvider = HaveIBeenPwnedPassordPolicyProvider(session.context)
+    override fun create(session: KeycloakSession): PasswordPolicyProvider = HaveIBeenPwnedPassordPolicyProvider(
+            PasswordService(),
+            HaveIBeenPwnedApiService(),
+            session.context
+    )
 
     override fun init(config: Config.Scope) {}
 
