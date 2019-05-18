@@ -4,7 +4,17 @@ A [Keycloak](https://www.keycloak.org/) password policy that checks potential pa
 
 ![account password reset page][policy-message]
 
-[policy-message]: ./images/pwned.png "Account password reset page policy message"
+## installation
+
+**Note**: this project was a weekend hack to try out the password policy SPI and HIBP API; it's not as robust or scalable as would be necessary in a production environment,  
+
+Build the jar with `make build` (see the [development](#development) section for prerequisites) and place it under `${KEYCLOAK_HOME}/standalone/deployments/`.
+
+Now you should the provider as an option in the dropdown, and can configure it:
+
+![policy config][policy-config]
+
+The policy value is a threshold for the number of times that the password hash appears in HIBP. The default is 1.
 
 ## development
 
@@ -22,3 +32,7 @@ A [Keycloak](https://www.keycloak.org/) password policy that checks potential pa
     - admin credentials: `keycloak:password`
     - user credentials: `test:password`
 - `./scripts/init-script.sh` to setup the realm and user
+
+
+[policy-message]: ./images/pwned.png "Account password reset page policy message"
+[policy-config]: ./images/policy-config.png "Policy setup and config"
