@@ -32,8 +32,25 @@ curl "${KEYCLOAK}/auth/admin/realms" \
                 -d '{"enabled": true, "realm": "'${REALM}'", "displayName": "'${REALM}'"}'
 
 curl "${KEYCLOAK}/auth/admin/realms/${REALM}/users" \
+        -H "Content-Type: application/json" \
+        -H "Authorization: bearer ${accessToken}" \
+        -s \
+        --fail \
+        -d '{"enabled": true, "username": "'${USERNAME}'", "credentials": [{"value": "'${PASSWORD}'", "temporary": false, "type": "password"}]}'
+
+
+# set realm password policy *after* creating the user, so that we can set a password that violates policy
+realmWithPasswordPolicy=$(
+    curl "${KEYCLOAK}/auth/admin/realms/${REALM}" \
+                -H "Authorization: bearer ${accessToken}" \
+                -s \
+                --fail \
+    | jq '.passwordPolicy = "password-policy-have-i-been-pwned(1)"')
+
+
+curl -X PUT "${KEYCLOAK}/auth/admin/realms/${REALM}" \
                 -H "Content-Type: application/json" \
                 -H "Authorization: bearer ${accessToken}" \
                 -s \
                 --fail \
-                -d '{"enabled": true, "username": "'${USERNAME}'", "credentials": [{"value": "'${PASSWORD}'", "temporary": false, "type": "password"}]}'
+                -d "${realmWithPasswordPolicy}"
