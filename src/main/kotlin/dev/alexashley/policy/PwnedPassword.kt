@@ -1,3 +1,3 @@
 package dev.alexashley.policy
 
-data class PwnedPassword(val hashedPassword: String, val pwnCount: Int)
+data class PwnedPassword(val hashSuffix: String, val pwnCount: Int)

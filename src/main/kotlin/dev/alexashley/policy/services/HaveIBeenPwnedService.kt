@@ -24,9 +24,15 @@ class HaveIBeenPwnedApiService {
         return responseBuffer
                 .splitToSequence("\n")
                 .map {
-                    val (partialHash, pwnCount) = it.trim().split(":")
+                    val (hashSuffix, pwnCount) = it.trim().split(":")
 
-                    PwnedPassword("$hashPrefix$partialHash", pwnCount.toInt())
+                    PwnedPassword(hashSuffix, pwnCount.toInt())
                 }
+    }
+
+    fun doesHashMatchPwnPassword(hash: String, pwndPassword: PwnedPassword): Boolean {
+        val hashSuffix = hash.slice(5 until hash.length)
+
+        return hashSuffix.compareTo(pwndPassword.hashSuffix, true) == 0
     }
 }

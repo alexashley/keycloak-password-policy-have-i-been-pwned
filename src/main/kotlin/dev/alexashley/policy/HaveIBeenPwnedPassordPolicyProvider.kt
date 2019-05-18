@@ -20,11 +20,11 @@ class HaveIBeenPwnedPassordPolicyProvider(
         val pwnedPasswords = pwnedService.lookupPwndPasswordsByHash(passwordHash)
 
         val pwned = pwnedPasswords.firstOrNull {
-            passwordHash.compareTo(it.hashedPassword, true) == 0
-                    && it.pwnCount >= passwordPwnThreshold
+            pwnedService.doesHashMatchPwnPassword(passwordHash, it) && it.pwnCount >= passwordPwnThreshold
         } ?: return null
 
         val formattedPwnCount = String.format("%,d", pwned.pwnCount)
+
         return PolicyError("""Please choose a different password. According to Have I Been Pwned, this password appears $formattedPwnCount times across a number of a data breaches. For more information, visit https://haveibeenpwned.com""")
     }
 
