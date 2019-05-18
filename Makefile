@@ -1,12 +1,15 @@
 MAKEFLAGS += --silent
 
-.PHONY: keycloak keycloak-image build
+.PHONY: acceptance keycloak keycloak-image build
 
 default:
 	echo "No default rule"
 
+acceptance:
+	./gradlew acceptance
+
 build:
-	gradle shadowJar
+	./gradlew shadowJar
 
 keycloak-image:
 	docker build -t keycloak-with-policy .
