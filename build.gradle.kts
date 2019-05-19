@@ -35,7 +35,6 @@ dependencies {
     implementation("org.keycloak:keycloak-server-spi-private:$keycloakVersion")
     implementation("khttp:khttp:1.0.0")
 
-//    testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }
