@@ -36,7 +36,7 @@ The policy value is the threshold for the number of times that the password hash
 - `make keycloak` to start an instance of Keycloak with the policy
     - admin credentials: `keycloak:password`
     - user credentials: `test:password`
-- `./scripts/init-script.sh` to setup the realm and user
+- `./scripts/init-keycloak.sh` to setup the realm and user
 - `make acceptance` to run the minimal acceptance tests
 
 [policy-message]: ./images/pwned.png "Account password reset page policy message"
