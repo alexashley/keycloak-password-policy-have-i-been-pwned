@@ -3,6 +3,8 @@ package dev.alexashley.policy.services
 import dev.alexashley.policy.PwnedPassword
 import khttp.get
 
+class HaveIBeenPwnedApiException(message: String) : Exception(message)
+
 class HaveIBeenPwnedApiService {
     companion object {
         private const val apiVersionContentType = "application/vnd.haveibeenpwned.v2+json"
@@ -11,7 +13,8 @@ class HaveIBeenPwnedApiService {
 
     fun lookupPwndPasswordsByHash(hash: String): Sequence<PwnedPassword> {
         val hashPrefix = hash.slice(0..4)
-        val response = get("$serviceUri/range/$hashPrefix", stream = true, headers = mapOf(
+        val path = "/range/$hashPrefix"
+        val response = get("$serviceUri$path", stream = true, headers = mapOf(
                 "User-Agent" to "keycloak-password-policy-have-i-been-pwned",
                 "Accept" to apiVersionContentType
         ))
@@ -19,6 +22,10 @@ class HaveIBeenPwnedApiService {
 
         for (chunk in response.contentIterator()) {
             responseBuffer.append(chunk.asSequence().map { it.toChar() }.joinToString(""))
+        }
+
+        if (response.statusCode != 200) {
+            throw HaveIBeenPwnedApiException("Non-200 response from $path. Status code: ${response.statusCode}. Body: $responseBuffer")
         }
 
         return responseBuffer
