@@ -20,11 +20,10 @@ class HaveIBeenPwnedPasswordPolicyTest {
         private const val keycloakAdminPassword = "password"
 
         private const val acceptanceUsername = "test"
-        private const val acceptancePassword = "password"
     }
 
-    lateinit var accessToken: String
-    lateinit var userId: String
+    private lateinit var accessToken: String
+    private lateinit var userId: String
 
     @BeforeAll
     fun before() {
