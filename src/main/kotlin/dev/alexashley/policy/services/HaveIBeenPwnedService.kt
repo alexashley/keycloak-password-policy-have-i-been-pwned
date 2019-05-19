@@ -37,7 +37,7 @@ class HaveIBeenPwnedApiService {
                 }
     }
 
-    fun doesHashMatchPwnPassword(hash: String, pwndPassword: PwnedPassword): Boolean {
+    fun hashMatchesPwnedPassword(hash: String, pwndPassword: PwnedPassword): Boolean {
         val hashSuffix = hash.slice(5 until hash.length)
 
         return hashSuffix.compareTo(pwndPassword.hashSuffix, true) == 0

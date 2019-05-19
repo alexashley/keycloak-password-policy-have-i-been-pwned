@@ -20,7 +20,7 @@ class HaveIBeenPwnedPassordPolicyProvider(
         val pwnedPasswords = pwnedService.lookupPwndPasswordsByHash(passwordHash)
 
         val pwned = pwnedPasswords.firstOrNull {
-            pwnedService.doesHashMatchPwnPassword(passwordHash, it) && it.pwnCount >= passwordPwnThreshold
+            pwnedService.hashMatchesPwnedPassword(passwordHash, it) && it.pwnCount >= passwordPwnThreshold
         } ?: return null
 
         val formattedPwnCount = String.format("%,d", pwned.pwnCount)
